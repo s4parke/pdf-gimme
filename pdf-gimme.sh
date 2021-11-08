@@ -9,7 +9,6 @@
 #
 #   Install qpdf (brew install qpdf on macos, apt-get install qpdf on ubuntu)
 
-
 echo "Creating directory for decrypted files.."
 mkdir -v decrypted
 
