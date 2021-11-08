@@ -2,20 +2,25 @@
 
 # Creates a decrypted copy of PDFs in current working directory
 
-# Prerequisites: 
-#
-#   A file called password.txt in the current directory with the following contents <<
-#    --password=THISISTHEPDFPASSWORD
-#
-#   Install qpdf (brew install qpdf on macos, apt-get install qpdf on ubuntu)
+if [! command -v qpdf &> /dev/null]; then
+    echo "QPDF could not be found. Try installing it and make sure qpdf is in your PATH."
+    exit
+fi
 
-echo "Creating directory for decrypted files.."
-mkdir -v decrypted
+if [! -d "./decrypted" ]; then
+    echo "Creating directory for decrypted files.."
+    mkdir -v decrypted
+fi
+
+if [! -s "./password.txt" ]; then
+    echo "password.txt file could not be found. Make sure it is in the current directory."
+    exit
+fi
 
 echo "Saving a decrypted copy of PDFs in current directory to ./decrypted/.."
 shopt -s nullglob
 for f in *.pdf
 do
-	echo "Removing password for: $f"
-      qpdf --decrypt @password.txt "$f" "decrypted/$f"
+    echo "Removing password for: $f"
+    qpdf --decrypt @password.txt "$f" "decrypted/$f"
 done
