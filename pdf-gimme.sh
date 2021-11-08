@@ -21,6 +21,8 @@ echo "Saving a decrypted copy of PDFs in current directory to ./decrypted/.."
 shopt -s nullglob
 for f in *.pdf
 do
-    echo "Removing password for: $f"
-    qpdf --decrypt @password.txt "$f" "decrypted/$f"
+    echo "Renaming encrypted PDF.."
+    cp -v "$f" "encrypted.$f"
+    echo "Removing encryption for $f"
+    qpdf --decrypt @password.txt "$f" --replace-input
 done
