@@ -24,5 +24,5 @@ do
     echo "Renaming encrypted PDF.."
     cp -v "$f" "encrypted.$f"
     echo "Removing encryption for $f"
-    qpdf --decrypt @password.txt "$f" --replace-input
+    qpdf --decrypt @password.txt "$f" --replace-input --removeRestrictions
 done
